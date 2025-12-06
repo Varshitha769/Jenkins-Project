@@ -4,19 +4,23 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/Varshitha769/Jenkins-Project.git'
+                git url: 'https://github.com/Varshitha769/Jenkins-Project.git', 
+                    credentialsId: 'github-creds'
             }
         }
+
         stage('Build') {
             steps {
                 sh 'mvn clean package'
             }
         }
+
         stage('Test') {
             steps {
                 sh 'mvn test'
             }
         }
+
         stage('Deploy to Tomcat') {
             steps {
                 sh 'cp target/*.war /opt/tomcat/webapps/'
@@ -24,4 +28,3 @@ pipeline {
         }
     }
 }
-
